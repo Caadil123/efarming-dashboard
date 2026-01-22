@@ -1,0 +1,66 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  EDITOR
+}
+
+enum Status {
+  DRAFT
+  PUBLISHED
+}
+
+enum UserStatus {
+  ACTIVE
+  INACTIVE
+}
+
+model User {
+  id           String     @id @default(cuid())
+  name         String?
+  email        String     @unique
+  image        String?
+  passwordHash String
+  role         Role       @default(EDITOR)
+  status       UserStatus @default(ACTIVE)
+  isDeleted    Boolean    @default(false)
+  posts        Post[]
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+}
+
+model Post {
+  id               String   @id @default(cuid())
+  title            String
+  slug             String   @unique
+  excerpt          String?
+  content          String   @db.Text
+  status           Status   @default(DRAFT)
+  featuredImageUrl String?
+  author           User     @relation(fields: [authorId], references: [id])
+  authorId         String
+  publishedAt      DateTime?
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
+
+model Project {
+  id            String   @id @default(cuid())
+  title         String
+  slug          String   @unique
+  summary       String?
+  description   String   @db.Text
+  status        Status   @default(DRAFT)
+  coverImageUrl String?
+  startDate     DateTime?
+  endDate       DateTime?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
