@@ -6,6 +6,7 @@ import { projectSchema } from "@/lib/validators/project";
 
 export async function GET() {
     const projects = await prisma.project.findMany({
+        where: { isDeleted: false },
         orderBy: { createdAt: "desc" },
     });
     return NextResponse.json(projects);

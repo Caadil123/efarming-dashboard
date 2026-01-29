@@ -9,11 +9,16 @@ export async function GET(
     { params }: { params: Promise<{ id: string }> }
 ) {
     const { id } = await params;
-    const post = await prisma.post.findUnique({
-        where: { id },
-    });
-    if (!post) return NextResponse.json({ error: "Post not found" }, { status: 404 });
-    return NextResponse.json(post);
+    try {
+        const post = await prisma.post.findUnique({
+            where: { id },
+        });
+        if (!post) return NextResponse.json({ error: "Post not found" }, { status: 404 });
+        return NextResponse.json(post);
+    } catch (error: any) {
+        console.error("GET post error:", error);
+        return NextResponse.json({ error: "Failed to fetch post" }, { status: 500 });
+    }
 }
 
 export async function PATCH(
@@ -31,9 +36,17 @@ export async function PATCH(
         const post = await prisma.post.update({
             where: { id },
             data: {
-                ...validatedData,
-                publishedAt: validatedData.status === "PUBLISHED" ? new Date() : null,
-            },
+                title: validatedData.title,
+                slug: validatedData.slug || (undefined as any),
+                excerpt: validatedData.excerpt,
+                content: validatedData.content,
+                contentSections: validatedData.contentSections as any,
+                featuredImage: validatedData.featuredImage,
+                status: validatedData.status,
+                publishedAt: (validatedData.status === "PUBLISHED"
+                    ? (validatedData.publishedAt ? new Date(validatedData.publishedAt) : new Date())
+                    : null) as any,
+            } as any,
         });
 
         return NextResponse.json(post);
@@ -51,8 +64,9 @@ export async function DELETE(
     if (!session) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
     try {
-        await prisma.post.delete({
+        await prisma.post.update({
             where: { id },
+            data: { isDeleted: true },
         });
         return NextResponse.json({ success: true });
     } catch (error: any) {

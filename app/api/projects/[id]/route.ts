@@ -52,8 +52,9 @@ export async function DELETE(
     if (!session) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
     try {
-        await prisma.project.delete({
+        await prisma.project.update({
             where: { id },
+            data: { isDeleted: true },
         });
         return NextResponse.json({ success: true });
     } catch (error: any) {

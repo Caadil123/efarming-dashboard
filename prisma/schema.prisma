@@ -39,28 +39,47 @@ model User {
 model Post {
   id               String   @id @default(cuid())
   title            String
-  slug             String   @unique
-  excerpt          String?
-  content          String   @db.Text
+  slug             String?  @unique
+  excerpt          String?  @db.Text
+  content          String?  @db.Text
+  contentSections  Json?    // Stores the array of subtitle/content sections
   status           Status   @default(DRAFT)
-  featuredImageUrl String?
+  featuredImage    String?
   author           User     @relation(fields: [authorId], references: [id])
   authorId         String
   publishedAt      DateTime?
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
+  isDeleted        Boolean  @default(false)
 }
 
 model Project {
   id            String   @id @default(cuid())
   title         String
-  slug          String   @unique
+  slug          String?
   summary       String?
   description   String   @db.Text
+  location      String?
+  category      String?
+  focusAreas    String[]
   status        Status   @default(DRAFT)
   coverImageUrl String?
   startDate     DateTime?
   endDate       DateTime?
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
+  isDeleted     Boolean  @default(false)
+}
+
+
+model TeamMember {
+  id          String   @id @default(cuid())
+  name        String
+  title       String
+  description String   @db.Text
+  imageUrl    String?
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  isDeleted    Boolean    @default(false)
 }

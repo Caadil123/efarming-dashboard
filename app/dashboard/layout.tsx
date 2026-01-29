@@ -10,6 +10,7 @@ import {
     FileText,
     Briefcase,
     Users,
+    Shield,
     LogOut,
     Menu,
     X
@@ -20,11 +21,13 @@ const sidebarItems = [
     { name: "Overview", href: "/dashboard", icon: LayoutDashboard },
     { name: "News & Insights", href: "/dashboard/posts", icon: FileText },
     { name: "Projects", href: "/dashboard/projects", icon: Briefcase },
+    { name: "Team Members", href: "/dashboard/team", icon: Users },
 ];
 
 const adminItems = [
-    { name: "User Management", href: "/dashboard/users", icon: Users },
+    { name: "User Management", href: "/dashboard/users", icon: Shield },
 ];
+
 
 export default function DashboardLayout({
     children,
@@ -132,16 +135,29 @@ export default function DashboardLayout({
                         {pathname === "/dashboard" ? "Overview" :
                             pathname.includes("/posts") ? "News & Insights" :
                                 pathname.includes("/projects") ? "Projects" :
-                                    pathname.includes("/users") ? "User Management" : "Dashboard"}
+                                    pathname.includes("/team") ? "Team Members" :
+                                        pathname.includes("/users") ? "User Management" : "Dashboard"}
                     </h1>
 
                     <div className="flex items-center space-x-4">
                         <div className="text-right">
-                            <p className="text-sm font-medium text-gray-900">{session?.user?.name}</p>
-                            <p className="text-xs text-gray-500">{session?.user?.role}</p>
+                            <p className="text-sm font-bold text-gray-900 leading-tight">
+                                {session?.user?.name?.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}
+                            </p>
+                            <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">{session?.user?.role || "ADMIN"}</p>
                         </div>
-                        <div className="h-10 w-10 rounded-full bg-green-100 flex items-center justify-center text-green-700 font-bold">
-                            {session?.user?.name?.[0]?.toUpperCase() || "U"}
+                        <div className="h-10 w-10 min-w-[40px] rounded-full overflow-hidden border-2 border-green-50 shadow-sm flex items-center justify-center bg-green-100 ring-2 ring-white">
+                            {session?.user?.image ? (
+                                <img
+                                    src={session.user.image}
+                                    alt={session.user.name || "User"}
+                                    className="h-full w-full object-cover"
+                                />
+                            ) : (
+                                <span className="text-green-700 font-black text-sm">
+                                    {(session?.user?.name?.[0] || session?.user?.email?.[0] || 'U').toUpperCase()}
+                                </span>
+                            )}
                         </div>
                     </div>
                 </header>

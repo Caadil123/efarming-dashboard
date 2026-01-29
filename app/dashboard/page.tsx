@@ -9,16 +9,18 @@ import {
 import Link from "next/link";
 
 async function getStats() {
-    const [postCount, projectCount, userCount] = await Promise.all([
+    const [postCount, projectCount, userCount, teamMemberCount] = await Promise.all([
         prisma.post.count(),
         prisma.project.count(),
         prisma.user.count(),
+        prisma.teamMember.count(),
     ]);
 
     return {
         postCount,
         projectCount,
         userCount,
+        teamMemberCount,
     };
 }
 
@@ -46,6 +48,13 @@ export default async function DashboardPage() {
             icon: Users,
             color: "bg-purple-500",
             href: "/dashboard/users",
+        },
+        {
+            name: "Team Members",
+            value: stats.teamMemberCount,
+            icon: Users,
+            color: "bg-orange-500",
+            href: "/dashboard/team",
         },
     ];
 

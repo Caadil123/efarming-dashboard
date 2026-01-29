@@ -5,11 +5,17 @@ import { prisma } from "@/lib/prisma";
 import { postSchema } from "@/lib/validators/post";
 
 export async function GET() {
-    const posts = await prisma.post.findMany({
-        include: { author: { select: { name: true } } },
-        orderBy: { createdAt: "desc" },
-    });
-    return NextResponse.json(posts);
+    try {
+        const posts = await prisma.post.findMany({
+            where: { isDeleted: false },
+            include: { author: { select: { name: true } } },
+            orderBy: { createdAt: "desc" },
+        });
+        return NextResponse.json(posts);
+    } catch (error: any) {
+        console.error("GET posts error:", error);
+        return NextResponse.json({ error: "Failed to fetch posts" }, { status: 500 });
+    }
 }
 
 export async function POST(req: Request) {
@@ -22,10 +28,18 @@ export async function POST(req: Request) {
 
         const post = await prisma.post.create({
             data: {
-                ...validatedData,
+                title: validatedData.title,
+                slug: validatedData.slug || (null as any),
+                excerpt: validatedData.excerpt,
+                content: validatedData.content,
+                contentSections: validatedData.contentSections as any,
+                featuredImage: validatedData.featuredImage,
+                status: validatedData.status,
                 authorId: session.user.id,
-                publishedAt: validatedData.status === "PUBLISHED" ? new Date() : null,
-            },
+                publishedAt: (validatedData.status === "PUBLISHED"
+                    ? (validatedData.publishedAt ? new Date(validatedData.publishedAt) : new Date())
+                    : null) as any,
+            } as any,
         });
 
         return NextResponse.json(post);
