@@ -10,10 +10,10 @@ import Link from "next/link";
 
 async function getStats() {
     const [postCount, projectCount, userCount, teamMemberCount] = await Promise.all([
-        prisma.post.count(),
-        prisma.project.count(),
-        prisma.user.count(),
-        prisma.teamMember.count(),
+        prisma.post.count({ where: { isDeleted: false } }),
+        prisma.project.count({ where: { isDeleted: false } }),
+        prisma.user.count({ where: { isDeleted: false } }),
+        prisma.teamMember.count({ where: { isDeleted: false } }),
     ]);
 
     return {

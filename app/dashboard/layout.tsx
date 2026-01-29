@@ -13,7 +13,8 @@ import {
     Shield,
     LogOut,
     Menu,
-    X
+    X,
+    Handshake
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -22,6 +23,7 @@ const sidebarItems = [
     { name: "News & Insights", href: "/dashboard/posts", icon: FileText },
     { name: "Projects", href: "/dashboard/projects", icon: Briefcase },
     { name: "Team Members", href: "/dashboard/team", icon: Users },
+    { name: "Partnerships", href: "/dashboard/partners", icon: Handshake },
 ];
 
 const adminItems = [
@@ -136,7 +138,8 @@ export default function DashboardLayout({
                             pathname.includes("/posts") ? "News & Insights" :
                                 pathname.includes("/projects") ? "Projects" :
                                     pathname.includes("/team") ? "Team Members" :
-                                        pathname.includes("/users") ? "User Management" : "Dashboard"}
+                                        pathname.includes("/partners") ? "Partnerships" :
+                                            pathname.includes("/users") ? "User Management" : "Dashboard"}
                     </h1>
 
                     <div className="flex items-center space-x-4">
