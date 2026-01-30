@@ -5,10 +5,7 @@ import { prisma } from "@/lib/prisma";
 import { teamMemberSchema } from "@/lib/validators/team-member";
 
 export async function GET() {
-    const session = await getServerSession(authOptions);
-    if (!session) {
-        return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
+
 
     try {
         const teamMembers = await prisma.teamMember.findMany({
@@ -37,6 +34,7 @@ export async function POST(req: Request) {
                 title: validatedData.title,
                 description: validatedData.description,
                 imageUrl: validatedData.imageUrl,
+                type: validatedData.type,
                 isActive: validatedData.isActive,
             },
         });

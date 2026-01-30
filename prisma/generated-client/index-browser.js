@@ -170,6 +170,7 @@ exports.Prisma.TeamMemberScalarFieldEnum = {
   title: 'title',
   description: 'description',
   imageUrl: 'imageUrl',
+  type: 'type',
   isActive: 'isActive',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
@@ -224,6 +225,11 @@ exports.UserStatus = exports.$Enums.UserStatus = {
 exports.Status = exports.$Enums.Status = {
   DRAFT: 'DRAFT',
   PUBLISHED: 'PUBLISHED'
+};
+
+exports.TeamType = exports.$Enums.TeamType = {
+  TEAM: 'TEAM',
+  ADVISOR: 'ADVISOR'
 };
 
 exports.Prisma.ModelName = {

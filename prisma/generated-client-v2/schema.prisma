@@ -1,0 +1,101 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "./generated-client-v2"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  EDITOR
+}
+
+enum Status {
+  DRAFT
+  PUBLISHED
+}
+
+enum UserStatus {
+  ACTIVE
+  INACTIVE
+}
+
+model User {
+  id           String     @id @default(cuid())
+  name         String?
+  email        String     @unique
+  image        String?
+  passwordHash String
+  role         Role       @default(EDITOR)
+  status       UserStatus @default(ACTIVE)
+  isDeleted    Boolean    @default(false)
+  posts        Post[]
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+}
+
+model Post {
+  id              String    @id @default(cuid())
+  title           String
+  slug            String?   @unique
+  excerpt         String?   @db.Text
+  content         String?   @db.Text
+  contentSections Json? // Stores the array of subtitle/content sections
+  status          Status    @default(DRAFT)
+  featuredImage   String?
+  author          User      @relation(fields: [authorId], references: [id])
+  authorId        String
+  publishedAt     DateTime?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  isDeleted       Boolean   @default(false)
+}
+
+model Project {
+  id            String    @id @default(cuid())
+  title         String
+  slug          String?
+  summary       String?
+  description   String    @db.Text
+  location      String?
+  category      String?
+  focusAreas    String[]
+  status        Status    @default(DRAFT)
+  coverImageUrl String?
+  startDate     DateTime?
+  endDate       DateTime?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  isDeleted     Boolean   @default(false)
+}
+
+enum TeamType {
+  TEAM
+  ADVISOR
+}
+
+model TeamMember {
+  id          String   @id @default(cuid())
+  name        String
+  title       String
+  description String   @db.Text
+  imageUrl    String?
+  type        TeamType @default(TEAM)
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  isDeleted   Boolean  @default(false)
+}
+
+model Partner {
+  id        String   @id @default(cuid())
+  name      String
+  imageUrl  String?
+  url       String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  isDeleted Boolean  @default(false)
+}

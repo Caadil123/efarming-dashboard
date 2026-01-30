@@ -66,6 +66,14 @@ export const UserStatus: {
 
 export type UserStatus = (typeof UserStatus)[keyof typeof UserStatus]
 
+
+export const TeamType: {
+  TEAM: 'TEAM',
+  ADVISOR: 'ADVISOR'
+};
+
+export type TeamType = (typeof TeamType)[keyof typeof TeamType]
+
 }
 
 export type Role = $Enums.Role
@@ -79,6 +87,10 @@ export const Status: typeof $Enums.Status
 export type UserStatus = $Enums.UserStatus
 
 export const UserStatus: typeof $Enums.UserStatus
+
+export type TeamType = $Enums.TeamType
+
+export const TeamType: typeof $Enums.TeamType
 
 /**
  * ##  Prisma Client ʲˢ
@@ -4731,6 +4743,7 @@ export namespace Prisma {
     title: string | null
     description: string | null
     imageUrl: string | null
+    type: $Enums.TeamType | null
     isActive: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -4743,6 +4756,7 @@ export namespace Prisma {
     title: string | null
     description: string | null
     imageUrl: string | null
+    type: $Enums.TeamType | null
     isActive: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -4755,6 +4769,7 @@ export namespace Prisma {
     title: number
     description: number
     imageUrl: number
+    type: number
     isActive: number
     createdAt: number
     updatedAt: number
@@ -4769,6 +4784,7 @@ export namespace Prisma {
     title?: true
     description?: true
     imageUrl?: true
+    type?: true
     isActive?: true
     createdAt?: true
     updatedAt?: true
@@ -4781,6 +4797,7 @@ export namespace Prisma {
     title?: true
     description?: true
     imageUrl?: true
+    type?: true
     isActive?: true
     createdAt?: true
     updatedAt?: true
@@ -4793,6 +4810,7 @@ export namespace Prisma {
     title?: true
     description?: true
     imageUrl?: true
+    type?: true
     isActive?: true
     createdAt?: true
     updatedAt?: true
@@ -4878,6 +4896,7 @@ export namespace Prisma {
     title: string
     description: string
     imageUrl: string | null
+    type: $Enums.TeamType
     isActive: boolean
     createdAt: Date
     updatedAt: Date
@@ -4907,6 +4926,7 @@ export namespace Prisma {
     title?: boolean
     description?: boolean
     imageUrl?: boolean
+    type?: boolean
     isActive?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -4919,6 +4939,7 @@ export namespace Prisma {
     title?: boolean
     description?: boolean
     imageUrl?: boolean
+    type?: boolean
     isActive?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -4931,6 +4952,7 @@ export namespace Prisma {
     title?: boolean
     description?: boolean
     imageUrl?: boolean
+    type?: boolean
     isActive?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -4943,13 +4965,14 @@ export namespace Prisma {
     title?: boolean
     description?: boolean
     imageUrl?: boolean
+    type?: boolean
     isActive?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     isDeleted?: boolean
   }
 
-  export type TeamMemberOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "title" | "description" | "imageUrl" | "isActive" | "createdAt" | "updatedAt" | "isDeleted", ExtArgs["result"]["teamMember"]>
+  export type TeamMemberOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "title" | "description" | "imageUrl" | "type" | "isActive" | "createdAt" | "updatedAt" | "isDeleted", ExtArgs["result"]["teamMember"]>
 
   export type $TeamMemberPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "TeamMember"
@@ -4960,6 +4983,7 @@ export namespace Prisma {
       title: string
       description: string
       imageUrl: string | null
+      type: $Enums.TeamType
       isActive: boolean
       createdAt: Date
       updatedAt: Date
@@ -5392,6 +5416,7 @@ export namespace Prisma {
     readonly title: FieldRef<"TeamMember", 'String'>
     readonly description: FieldRef<"TeamMember", 'String'>
     readonly imageUrl: FieldRef<"TeamMember", 'String'>
+    readonly type: FieldRef<"TeamMember", 'TeamType'>
     readonly isActive: FieldRef<"TeamMember", 'Boolean'>
     readonly createdAt: FieldRef<"TeamMember", 'DateTime'>
     readonly updatedAt: FieldRef<"TeamMember", 'DateTime'>
@@ -6859,6 +6884,7 @@ export namespace Prisma {
     title: 'title',
     description: 'description',
     imageUrl: 'imageUrl',
+    type: 'type',
     isActive: 'isActive',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
@@ -7015,6 +7041,20 @@ export namespace Prisma {
    * Reference to a field of type 'Status[]'
    */
   export type ListEnumStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Status[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'TeamType'
+   */
+  export type EnumTeamTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TeamType'>
+    
+
+
+  /**
+   * Reference to a field of type 'TeamType[]'
+   */
+  export type ListEnumTeamTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TeamType[]'>
     
 
 
@@ -7321,6 +7361,7 @@ export namespace Prisma {
     title?: StringFilter<"TeamMember"> | string
     description?: StringFilter<"TeamMember"> | string
     imageUrl?: StringNullableFilter<"TeamMember"> | string | null
+    type?: EnumTeamTypeFilter<"TeamMember"> | $Enums.TeamType
     isActive?: BoolFilter<"TeamMember"> | boolean
     createdAt?: DateTimeFilter<"TeamMember"> | Date | string
     updatedAt?: DateTimeFilter<"TeamMember"> | Date | string
@@ -7333,6 +7374,7 @@ export namespace Prisma {
     title?: SortOrder
     description?: SortOrder
     imageUrl?: SortOrderInput | SortOrder
+    type?: SortOrder
     isActive?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -7348,6 +7390,7 @@ export namespace Prisma {
     title?: StringFilter<"TeamMember"> | string
     description?: StringFilter<"TeamMember"> | string
     imageUrl?: StringNullableFilter<"TeamMember"> | string | null
+    type?: EnumTeamTypeFilter<"TeamMember"> | $Enums.TeamType
     isActive?: BoolFilter<"TeamMember"> | boolean
     createdAt?: DateTimeFilter<"TeamMember"> | Date | string
     updatedAt?: DateTimeFilter<"TeamMember"> | Date | string
@@ -7360,6 +7403,7 @@ export namespace Prisma {
     title?: SortOrder
     description?: SortOrder
     imageUrl?: SortOrderInput | SortOrder
+    type?: SortOrder
     isActive?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -7378,6 +7422,7 @@ export namespace Prisma {
     title?: StringWithAggregatesFilter<"TeamMember"> | string
     description?: StringWithAggregatesFilter<"TeamMember"> | string
     imageUrl?: StringNullableWithAggregatesFilter<"TeamMember"> | string | null
+    type?: EnumTeamTypeWithAggregatesFilter<"TeamMember"> | $Enums.TeamType
     isActive?: BoolWithAggregatesFilter<"TeamMember"> | boolean
     createdAt?: DateTimeWithAggregatesFilter<"TeamMember"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"TeamMember"> | Date | string
@@ -7784,6 +7829,7 @@ export namespace Prisma {
     title: string
     description: string
     imageUrl?: string | null
+    type?: $Enums.TeamType
     isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -7796,6 +7842,7 @@ export namespace Prisma {
     title: string
     description: string
     imageUrl?: string | null
+    type?: $Enums.TeamType
     isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -7808,6 +7855,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: EnumTeamTypeFieldUpdateOperationsInput | $Enums.TeamType
     isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -7820,6 +7868,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: EnumTeamTypeFieldUpdateOperationsInput | $Enums.TeamType
     isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -7832,6 +7881,7 @@ export namespace Prisma {
     title: string
     description: string
     imageUrl?: string | null
+    type?: $Enums.TeamType
     isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -7844,6 +7894,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: EnumTeamTypeFieldUpdateOperationsInput | $Enums.TeamType
     isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -7856,6 +7907,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: EnumTeamTypeFieldUpdateOperationsInput | $Enums.TeamType
     isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -8326,12 +8378,20 @@ export namespace Prisma {
     isDeleted?: SortOrder
   }
 
+  export type EnumTeamTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.TeamType | EnumTeamTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.TeamType[] | ListEnumTeamTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.TeamType[] | ListEnumTeamTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumTeamTypeFilter<$PrismaModel> | $Enums.TeamType
+  }
+
   export type TeamMemberCountOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
     title?: SortOrder
     description?: SortOrder
     imageUrl?: SortOrder
+    type?: SortOrder
     isActive?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -8344,6 +8404,7 @@ export namespace Prisma {
     title?: SortOrder
     description?: SortOrder
     imageUrl?: SortOrder
+    type?: SortOrder
     isActive?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -8356,10 +8417,21 @@ export namespace Prisma {
     title?: SortOrder
     description?: SortOrder
     imageUrl?: SortOrder
+    type?: SortOrder
     isActive?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     isDeleted?: SortOrder
+  }
+
+  export type EnumTeamTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.TeamType | EnumTeamTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.TeamType[] | ListEnumTeamTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.TeamType[] | ListEnumTeamTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumTeamTypeWithAggregatesFilter<$PrismaModel> | $Enums.TeamType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumTeamTypeFilter<$PrismaModel>
+    _max?: NestedEnumTeamTypeFilter<$PrismaModel>
   }
 
   export type PartnerCountOrderByAggregateInput = {
@@ -8487,6 +8559,10 @@ export namespace Prisma {
   export type ProjectUpdatefocusAreasInput = {
     set?: string[]
     push?: string | string[]
+  }
+
+  export type EnumTeamTypeFieldUpdateOperationsInput = {
+    set?: $Enums.TeamType
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -8708,6 +8784,23 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedDateTimeNullableFilter<$PrismaModel>
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
+  }
+
+  export type NestedEnumTeamTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.TeamType | EnumTeamTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.TeamType[] | ListEnumTeamTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.TeamType[] | ListEnumTeamTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumTeamTypeFilter<$PrismaModel> | $Enums.TeamType
+  }
+
+  export type NestedEnumTeamTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.TeamType | EnumTeamTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.TeamType[] | ListEnumTeamTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.TeamType[] | ListEnumTeamTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumTeamTypeWithAggregatesFilter<$PrismaModel> | $Enums.TeamType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumTeamTypeFilter<$PrismaModel>
+    _max?: NestedEnumTeamTypeFilter<$PrismaModel>
   }
 
   export type PostCreateWithoutAuthorInput = {
