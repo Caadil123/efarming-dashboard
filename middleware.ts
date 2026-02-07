@@ -4,7 +4,6 @@ import { NextResponse } from "next/server";
 export default withAuth(
     function middleware(req) {
         const token = req.nextauth.token;
-        const isDashboard = req.nextUrl.pathname.startsWith("/dashboard");
         const isUsersPage = req.nextUrl.pathname.startsWith("/dashboard/users");
 
         // Role protection for users management
@@ -20,5 +19,8 @@ export default withAuth(
 );
 
 export const config = {
-    matcher: ["/dashboard", "/dashboard/:path*"],
+    matcher: [
+        "/dashboard/:path*",
+        "/((?!api|_next/static|_next/image|favicon.ico).*)",
+    ],
 };
